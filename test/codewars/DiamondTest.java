@@ -52,6 +52,6 @@ public class DiamondTest {
         System.out.println(result);
         System.out.println("--");
 
-        assertEquals(expected, result);
+        assertEquals(expected.toString(), result);
     }
 }

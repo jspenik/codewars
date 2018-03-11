@@ -11,25 +11,19 @@ public class Diamond {
 
         StringBuilder result = new StringBuilder();
 
-        int shorterLines = (n - 1) / 2;
-        System.out.println("slines: " + shorterLines);
+        int shorterLines = n / 2;
 
-        for (int rowIndex = 1; rowIndex <= n; rowIndex++) {
-            int lineWidth = n + 1 / 2 + (rowIndex - 1);
-            int nSpaces = Math.abs(shorterLines - rowIndex + 1);
-            int nAsterices = lineWidth - nSpaces;
+        int fullLineNumber = shorterLines + 1;
 
-            result.append(
-                    IntStream.range(0, nSpaces)
-                            .map(i -> ' ').collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-            ).append(
-                    IntStream.range(0, nAsterices)
-                            .map(i -> '*').collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).append('\n')
-            );
+        for (int rowIndex = 0; rowIndex < n; rowIndex++) {
+            int lineWidth = fullLineNumber > rowIndex ? rowIndex + shorterLines + 1 : Math.abs(rowIndex - shorterLines - n);
+            int nSpaces = Math.abs(shorterLines - rowIndex);
+            int nAsterisks = lineWidth - nSpaces;
 
-            System.out.println("lineWidth : " + lineWidth);
-            System.out.println("Spaces : " + nSpaces);
-            System.out.println("Asterices: " + nAsterices);
+            IntStream.range(0, nSpaces)
+                    .map(i -> ' ').collect(() -> result, StringBuilder::appendCodePoint, StringBuilder::append);
+            IntStream.range(0, nAsterisks)
+                    .map(i -> '*').collect(() -> result, StringBuilder::appendCodePoint, StringBuilder::append).append('\n');
         }
 
         return result.toString();
